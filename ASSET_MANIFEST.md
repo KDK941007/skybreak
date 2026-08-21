@@ -2,6 +2,8 @@
 
 ゲーム画像はリポジトリのルート直下に `assets/` フォルダを作成して配置します。
 
+現在の戦闘基盤では、キャラクターと主要エフェクトは透過PNGを使用し、ステージのみWebPを使用します。過去のWebPキャラクター素材にはスプライト切り出し時の断片が混入していたため、現行コードでは使用しません。
+
 ```text
 skybreak/
 ├─ index.html
@@ -13,25 +15,23 @@ skybreak/
 ├─ .nojekyll
 ├─ .github/
 └─ assets/
-   ├─ aion_hit.webp
-   ├─ aion_idle0.webp
-   ├─ fx_blast_fire.webp
-   ├─ fx_fire_slash.webp
-   ├─ fx_hit_orange.webp
-   ├─ rex_attack0.webp
-   ├─ rex_attack1.webp
-   ├─ rex_fall.webp
-   ├─ rex_idle0.webp
-   ├─ rex_idle1.webp
-   ├─ rex_jump.webp
-   ├─ rex_run0.webp
-   ├─ rex_run1.webp
-   ├─ rex_special.webp
+   ├─ aion_hit.png
+   ├─ aion_idle0.png
+   ├─ fx_blast_fire.png
+   ├─ fx_blue_slash.png
+   ├─ fx_hit_orange.png
+   ├─ rex_fall.png
+   ├─ rex_idle0.png
+   ├─ rex_idle1.png
+   ├─ rex_jump.png
+   ├─ rex_run0.png
+   ├─ rex_run1.png
    └─ stage.webp
 ```
 
 ## 注意
 
 - `assets/assets/...` の二重階層にしないこと。
-- ファイル名は変更しないこと。`index.html` と `game.js` が上記パスを参照しています。
-- 画像追加後に `main` へpushすると、GitHub Pages Workflowが画像の存在を確認し、公開処理を実行します。
+- 上記ファイル名は変更しないこと。`index.html` と `game.js` がこのパスを参照します。
+- 旧 `rex_attack*.webp` / `rex_special.webp` は現行戦闘基盤では使用しません。攻撃モーションはキャラクター本体と独立したVFXで構成します。
+- 開発中は対象featureブランチの `assets/` へ追加し、PRをmainへマージします。mainへの反映後、GitHub Pages Workflowが必要画像を確認して自動公開します。

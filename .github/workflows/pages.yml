@@ -28,14 +28,32 @@ jobs:
         id: assets
         shell: bash
         run: |
-          if [ -f assets/stage.webp ] \
-            && [ -f assets/rex_idle0.webp ] \
-            && [ -f assets/aion_idle0.webp ] \
-            && [ -f assets/fx_fire_slash.webp ]; then
+          required=(
+            assets/stage.webp
+            assets/rex_idle0.png
+            assets/rex_idle1.png
+            assets/rex_run0.png
+            assets/rex_run1.png
+            assets/rex_jump.png
+            assets/rex_fall.png
+            assets/aion_idle0.png
+            assets/aion_hit.png
+            assets/fx_blue_slash.png
+            assets/fx_blast_fire.png
+            assets/fx_hit_orange.png
+          )
+          missing=0
+          for file in "${required[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "missing: $file"
+              missing=1
+            fi
+          done
+          if [ "$missing" -eq 0 ]; then
             echo "ready=true" >> "$GITHUB_OUTPUT"
           else
             echo "ready=false" >> "$GITHUB_OUTPUT"
-            echo "SKYBREAK image assets are not committed yet. Skipping Pages deployment."
+            echo "SKYBREAK image assets are incomplete. Skipping Pages deployment."
           fi
 
       - name: Configure Pages
