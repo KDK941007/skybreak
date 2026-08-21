@@ -12,12 +12,17 @@
   <div id="stageWorld" aria-hidden="true">
     <img class="stagePanel" src="./assets/stage.webp" alt="">
     <img class="stagePanel mirrored" src="./assets/stage.webp" alt="">
+    <img class="stagePanel" src="./assets/stage.webp" alt="">
+    <img class="stagePanel mirrored" src="./assets/stage.webp" alt="">
   </div>
   <div id="vignette"></div>
   <div id="vfxBackLayer" class="vfxCanvas"></div>
   <div id="projectileLayer" class="vfxCanvas"></div>
 
   <a id="portalBtn" href="https://kdk941007.github.io/KDKGames/" aria-label="ポータルへ戻る">PORTAL</a>
+
+  <div id="playerShadow" class="groundShadow"></div>
+  <div id="enemyShadow" class="groundShadow enemyShadow"></div>
 
   <div id="player" class="fighter">
     <img id="playerImg" src="./assets/rex_idle0.png" alt="">
@@ -28,6 +33,7 @@
     <span class="tag enemyTag">DUMMY</span>
   </div>
 
+  <div id="guardBubble" aria-hidden="true"></div>
   <div id="vfxFrontLayer" class="vfxCanvas"></div>
 
   <header id="hud">
@@ -35,7 +41,7 @@
       <b>REX</b>
       <div class="hp"><i id="playerHp"></i></div>
     </section>
-    <div class="hudCenter">SKYBREAK / 2× STAGE TEST</div>
+    <div class="hudCenter">SKYBREAK / WIDE STAGE</div>
     <section class="hpCard enemyCard">
       <b>DUMMY</b>
       <div class="hp"><i id="enemyHp"></i></div>
@@ -47,6 +53,7 @@
   </div>
   <div id="touchRight">
     <button id="jumpBtn" class="jump">JUMP</button>
+    <button id="guardBtn" class="guard">GUARD</button>
     <button id="attackBtn" class="attack">A</button>
     <button id="specialBtn" class="special">B</button>
   </div>
