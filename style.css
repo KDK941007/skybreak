@@ -3,18 +3,22 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#02060d;col
 body{touch-action:none;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
 button{font:inherit;color:inherit}
 #game{position:fixed;inset:0;width:100vw;height:100dvh;overflow:hidden;background:#78c8f6}
-#stageWorld{position:absolute;left:0;top:0;width:200vw;height:100%;display:flex;will-change:transform;z-index:0}
+#stageWorld{position:absolute;left:0;top:0;width:400vw;height:100%;display:flex;will-change:transform;z-index:0}
 .stagePanel{display:block;flex:0 0 100vw;width:100vw;height:100%;object-fit:cover;filter:saturate(1.05) contrast(1.04)}
 .stagePanel.mirrored{transform:scaleX(-1)}
 #vignette{position:absolute;inset:0;pointer-events:none;z-index:2;background:linear-gradient(180deg,rgba(0,0,0,.08),transparent 18%,transparent 78%,rgba(0,0,0,.20)),linear-gradient(90deg,rgba(0,0,0,.14),transparent 9%,transparent 91%,rgba(0,0,0,.14))}
 .vfxCanvas{position:absolute;inset:0;pointer-events:none;overflow:visible}
-#vfxBackLayer{z-index:5}#projectileLayer{z-index:7}#vfxFrontLayer{z-index:9}
+#vfxBackLayer{z-index:5}#projectileLayer{z-index:7}#vfxFrontLayer{z-index:11}
 #portalBtn{position:absolute;z-index:30;left:max(10px,env(safe-area-inset-left));top:max(10px,env(safe-area-inset-top));padding:8px 12px;border-radius:999px;background:rgba(5,15,27,.68);border:1px solid rgba(255,255,255,.2);color:#fff;text-decoration:none;font-weight:800;font-size:11px;letter-spacing:.1em;backdrop-filter:blur(5px)}
+.groundShadow{position:absolute;z-index:4;width:92px;height:18px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.48) 0%,rgba(0,0,0,.28) 46%,rgba(0,0,0,0) 75%);pointer-events:none;transform:translate(-50%,-50%);will-change:transform,opacity}
+.enemyShadow{width:86px}
 .fighter{position:absolute;z-index:6;width:clamp(230px,25vw,340px);height:clamp(330px,59vh,460px);pointer-events:none;overflow:visible;transform-origin:50% 100%;will-change:transform;filter:drop-shadow(0 12px 8px rgba(0,0,0,.48));backface-visibility:hidden;contain:none}
 .fighter img{position:absolute;left:50%;bottom:0;width:96%;height:96%;object-fit:contain;display:block;transform:translateX(-50%);transform-origin:center bottom;overflow:visible}
 .fighter.enemy img{transform:translateX(-50%) scaleX(-1)}
 .tag{position:absolute;left:50%;top:7%;transform:translate(-50%,-65%);padding:3px 8px;border-radius:999px;font-size:11px;font-weight:900;text-shadow:0 2px 3px #000;white-space:nowrap}
 .playerTag{background:#e84e3c}.enemyTag{background:#278fd5}.hitFlash img{filter:brightness(2) saturate(.35)}
+#guardBubble{position:absolute;z-index:8;display:none;width:clamp(145px,17vw,215px);height:clamp(190px,34vh,285px);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.22),rgba(70,180,255,.14) 32%,rgba(53,111,255,.18) 62%,rgba(20,61,160,.08) 72%,transparent 74%);border:3px solid rgba(126,220,255,.82);box-shadow:0 0 20px rgba(76,177,255,.7),inset 0 0 24px rgba(105,207,255,.38);animation:shieldPulse .58s ease-in-out infinite alternate}
+@keyframes shieldPulse{from{filter:brightness(.9);scale:.97}to{filter:brightness(1.16);scale:1.02}}
 #hud{position:absolute;z-index:20;left:90px;right:max(12px,env(safe-area-inset-right));top:max(8px,env(safe-area-inset-top));display:grid;grid-template-columns:minmax(180px,31%) 1fr minmax(180px,31%);gap:10px;pointer-events:none}
 .hpCard{padding:8px 12px;border-radius:12px;background:rgba(5,15,27,.72);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(5px);box-shadow:0 5px 14px rgba(0,0,0,.22)}
 .hpCard b{display:block;font-size:clamp(11px,1.6vw,18px);letter-spacing:.1em;margin-bottom:5px}.enemyCard{text-align:right}
@@ -23,10 +27,12 @@ button{font:inherit;color:inherit}
 #touchLeft{position:absolute;z-index:21;left:max(14px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom))}
 #stickBase{position:relative;width:clamp(92px,11vw,132px);height:clamp(92px,11vw,132px);border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.26),rgba(67,106,160,.22) 42%,rgba(6,15,27,.72) 75%);border:1px solid rgba(143,220,255,.3);box-shadow:0 7px 22px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.17);backdrop-filter:blur(4px);touch-action:none}
 #stickKnob{position:absolute;left:50%;top:50%;width:44%;height:44%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#8bd1ff 42%,#3a66ad);box-shadow:0 5px 14px rgba(0,0,0,.35)}
-#touchRight{position:absolute;z-index:21;right:max(14px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:flex-end;gap:10px}
+#touchRight{position:absolute;z-index:21;right:max(14px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));display:flex;align-items:flex-end;gap:8px}
 #touchRight button{border:1px solid rgba(255,255,255,.3);font-weight:900;box-shadow:0 6px 18px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.2);backdrop-filter:blur(4px)}
-.jump{width:clamp(74px,8.4vw,104px);height:clamp(48px,5.6vw,70px);border-radius:999px;background:rgba(63,93,196,.78)}
-.attack,.special{width:clamp(54px,6.2vw,78px);height:clamp(54px,6.2vw,78px);border-radius:50%;font-size:clamp(20px,2.6vw,30px)}
+.jump{width:clamp(72px,8vw,100px);height:clamp(48px,5.5vw,68px);border-radius:999px;background:rgba(63,93,196,.82)}
+.guard{width:clamp(68px,7.3vw,92px);height:clamp(44px,5vw,62px);border-radius:999px;background:rgba(47,150,157,.82);font-size:clamp(9px,1.2vw,13px);letter-spacing:.05em}
+.guard.active{background:rgba(72,203,215,.94);box-shadow:0 0 18px rgba(93,224,255,.72),inset 0 1px rgba(255,255,255,.28)}
+.attack,.special{width:clamp(52px,6vw,76px);height:clamp(52px,6vw,76px);border-radius:50%;font-size:clamp(20px,2.6vw,30px)}
 .attack{background:rgba(213,68,47,.84)}.special{background:rgba(34,113,205,.84)}
 .fx{position:absolute;pointer-events:none;transform:translate(-50%,-50%);transform-origin:center;mix-blend-mode:screen;animation:fxIn .30s ease-out forwards;will-change:transform,opacity;overflow:visible}
 .fx.specialFx{animation-duration:.42s}.fx img{width:100%;height:100%;object-fit:contain;display:block;overflow:visible}
@@ -35,4 +41,6 @@ button{font:inherit;color:inherit}
 .trail{position:absolute;pointer-events:none;transform:translate(-50%,-50%);border-radius:50%;mix-blend-mode:screen;animation:trail .2s linear forwards}@keyframes trail{from{opacity:.85;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(.25)}}
 .ring{position:absolute;pointer-events:none;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,255,255,.82);mix-blend-mode:screen;animation:ring .25s ease-out forwards}@keyframes ring{from{opacity:.95;transform:translate(-50%,-50%) scale(.25)}to{opacity:0;transform:translate(-50%,-50%) scale(1.7)}}
 .damagePop{position:absolute;pointer-events:none;transform:translate(-50%,-50%);font-size:clamp(18px,2.2vw,28px);font-weight:950;color:#ffe477;text-shadow:0 2px 3px rgba(0,0,0,.6);animation:pop .5s ease-out forwards}@keyframes pop{0%{opacity:0;transform:translate(-50%,-42%) scale(.75)}12%{opacity:1;transform:translate(-50%,-55%) scale(1.02)}100%{opacity:0;transform:translate(-50%,-120%) scale(.9)}}
-@media(max-height:430px){#hud{top:4px}.hpCard{padding:6px 9px}.fighter{height:57vh}.jump{height:45px}.attack,.special{width:52px;height:52px}.hpCard b{margin-bottom:3px}}
+.landingDust{position:absolute;z-index:10;pointer-events:none;width:70px;height:18px;border:2px solid rgba(239,248,255,.72);border-radius:50%;transform:translate(-50%,-50%);animation:landDust .28s ease-out forwards}
+@keyframes landDust{from{opacity:.8;transform:translate(-50%,-50%) scale(.35)}to{opacity:0;transform:translate(-50%,-50%) scale(1.45)}}
+@media(max-height:430px){#hud{top:4px}.hpCard{padding:6px 9px}.fighter{height:57vh}.jump{height:44px}.guard{height:40px}.attack,.special{width:50px;height:50px}.hpCard b{margin-bottom:3px}}
