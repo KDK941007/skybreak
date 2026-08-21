@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#050b14">
+<title>SKYBREAK</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main id="game">
+  <img id="stage" src="./assets/stage.webp" alt="">
+  <div id="vignette"></div>
+  <div id="vfxBackLayer" class="vfxCanvas"></div>
+  <div id="projectileLayer" class="vfxCanvas"></div>
+
+  <a id="portalBtn" href="https://kdk941007.github.io/KDKGames/" aria-label="ポータルへ戻る">PORTAL</a>
+
+  <div id="player" class="fighter">
+    <img id="playerImg" src="./assets/rex_idle0.webp" alt="">
+    <span class="tag playerTag">1P</span>
+  </div>
+  <div id="enemy" class="fighter enemy">
+    <img id="enemyImg" src="./assets/aion_idle0.webp" alt="">
+    <span class="tag enemyTag">DUMMY</span>
+  </div>
+
+  <div id="vfxFrontLayer" class="vfxCanvas"></div>
+
+  <header id="hud">
+    <section class="hpCard p1Card">
+      <b>REX</b>
+      <div class="hp"><i id="playerHp"></i></div>
+    </section>
+    <div class="hudCenter">SKYBREAK / COMBAT BASELINE</div>
+    <section class="hpCard enemyCard">
+      <b>DUMMY</b>
+      <div class="hp"><i id="enemyHp"></i></div>
+    </section>
+  </header>
+
+  <div id="touchLeft">
+    <div id="stickBase"><div id="stickKnob"></div></div>
+  </div>
+  <div id="touchRight">
+    <button id="jumpBtn" class="jump">JUMP</button>
+    <button id="attackBtn" class="attack">A</button>
+    <button id="specialBtn" class="special">B</button>
+  </div>
+</main>
+<script src="./game.js"></script>
+</body>
+</html>
