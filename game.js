@@ -22,7 +22,7 @@ const input={x:0,y:0,left:false,right:false,down:false};
 const FIXED=1/120, WORLD_SCREENS=4, GROUND=.655, FOOT_SINK=5;
 let last=performance.now(),acc=0,projectiles=[],cameraX=0;
 const state={
-  p:{x:.48,y:GROUND,prevX:.48,prevY:GROUND,vx:0,vy:0,on:true,jumps:2,attack:0,special:0,face:1,guard:false,crouch:false},
+  p:{x:.48,y:GROUND,prevX:.48,prevY:GROUND,vx:0,vy:0,on:true,jumps:2,attack:0,special:0,face:1,guard:false,crouch:false,wasOn:true},
   e:{x:1.05,y:GROUND,hp:100,hit:0},
   php:100
 };
@@ -39,7 +39,7 @@ function hitEnemy(amount,blue=false){if(state.e.hit>0)return;state.e.hp=Math.max
 
 function setGuard(on){
   const p=state.p;
-  p.guard=!!on&&p.on&&p.attack<=0&&p.special<=0&&!p.crouch;
+  p.guard=!!on && p.on && p.attack<=0 && p.special<=0 && !p.crouch;
   GUARD_BTN.classList.toggle('active',p.guard);
 }
 function attack(){
@@ -131,7 +131,7 @@ function frame(){
   return(performance.now()/210|0)%2?sprites.p.idle[0]:sprites.p.idle[1];
 }
 function renderShadow(el,wx,airY,crouch=false){
-  const p=screenPos(wx,GROUND);
+  const r=rect(),p=screenPos(wx,GROUND);
   const height=Math.max(0,GROUND-airY);
   const shrink=Math.max(.46,1-height*2.2);
   const wide=crouch?1.18:1;
