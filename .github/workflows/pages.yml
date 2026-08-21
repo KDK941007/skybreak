@@ -1,0 +1,63 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check game assets
+        id: assets
+        shell: bash
+        run: |
+          if [ -f assets/stage.webp ] \
+            && [ -f assets/rex_idle0.webp ] \
+            && [ -f assets/aion_idle0.webp ] \
+            && [ -f assets/fx_fire_slash.webp ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "SKYBREAK image assets are not committed yet. Skipping Pages deployment."
+          fi
+
+      - name: Configure Pages
+        if: steps.assets.outputs.ready == 'true'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Build static site
+        if: steps.assets.outputs.ready == 'true'
+        run: |
+          mkdir -p _site
+          cp index.html style.css game.js .nojekyll _site/
+          cp -R assets _site/assets
+
+      - name: Upload artifact
+        if: steps.assets.outputs.ready == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        if: steps.assets.outputs.ready == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
